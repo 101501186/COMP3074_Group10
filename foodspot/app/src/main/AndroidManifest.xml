@@ -1,0 +1,28 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ca.gbc.foodspot">
+
+    <application
+        android:allowBackup="true"
+        android:label="FoodSpot"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".MapActivity" />
+        <activity android:name=".AddEditRestaurantActivity" />
+        <activity android:name=".RestaurantDetailActivity" />
+        <activity android:name=".MainActivity" />
+
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+
+    </application>
+</manifest>

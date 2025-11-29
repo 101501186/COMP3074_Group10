@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/drawer_home"
+        android:icon="@drawable/ic_nav_home"
+        android:title="@string/drawer_home" />
+
+    <item
+        android:id="@+id/drawer_favorites"
+        android:icon="@android:drawable/btn_star"
+        android:title="@string/drawer_favorites" />
+
+    <item
+        android:id="@+id/drawer_my_reviews"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/drawer_my_reviews" />
+
+    <item
+        android:id="@+id/drawer_settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/drawer_settings" />
+
+    <item
+        android:id="@+id/drawer_help"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="@string/drawer_help" />
+
+</menu>
