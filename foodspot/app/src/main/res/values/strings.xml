@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="google_maps_key">AIzaSyD7Yx1VaDDl5aZpWSI4MKjajjcSD8eUdc0</string>
+
     <!-- App Name -->
     <string name="app_name">FoodSpot</string>
 

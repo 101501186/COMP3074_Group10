@@ -25,7 +25,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     private TextView textName, textMeta, textAddress, textDistance,
             textDescription, textPhone, textTags;
     private CheckBox checkFavorite;
-
     private RatingBar detailRatingBar;
 
     @Override
@@ -50,8 +49,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         Button buttonEdit = findViewById(R.id.buttonEdit);
         Button buttonDelete = findViewById(R.id.buttonDelete);
 
-        detailRatingBar.setRating(restaurant.getRating());
-
         image.setImageResource(R.drawable.ic_restaurant_placeholder);
 
         long id = getIntent().getLongExtra("restaurant_id", -1);
@@ -74,7 +71,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             dbHelper.updateRestaurant(restaurant);
         });
 
-        buttonMap.setOnClickListener(v -> openInMaps());
+        buttonMap.setOnClickListener(v -> openMapScreen());
         buttonShare.setOnClickListener(v -> share());
         buttonEdit.setOnClickListener(v -> {
             Intent i = new Intent(this, AddEditRestaurantActivity.class);
@@ -103,18 +100,14 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         textPhone.setText(restaurant.getPhone());
         textTags.setText(restaurant.getTags());
         checkFavorite.setChecked(restaurant.isFavorite());
+
+        detailRatingBar.setRating(restaurant.getRating());
     }
 
-    private void openInMaps() {
-        String query = restaurant.getName() + " " + restaurant.getAddress();
-        Uri uri = Uri.parse("geo:0,0?q=" + Uri.encode(query));
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        if (mapIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(mapIntent);
-        } else {
-            startActivity(new Intent(Intent.ACTION_VIEW, uri));
-        }
+    private void openMapScreen() {
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra(MapActivity.EXTRA_RESTAURANT_ID, restaurant.getId());
+        startActivity(intent);
     }
 
     private void share() {

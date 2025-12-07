@@ -23,58 +23,14 @@
             android:layout_weight="1"
             android:background="@color/background_light">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="260dp"
-                android:layout_height="260dp"
-                android:layout_centerInParent="true"
-                app:cardCornerRadius="16dp"
-                app:cardUseCompatPadding="true"
-                app:cardElevation="4dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#E5D1A0">
-
-                    <View
-                        android:layout_width="2dp"
-                        android:layout_height="match_parent"
-                        android:layout_centerHorizontal="true"
-                        android:background="#D0B884" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_centerVertical="true"
-                        android:background="#D0B884" />
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_nav_map"
-                        android:tint="@color/orange_primary" />
-
-                    <TextView
-                        android:id="@+id/textMapHint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/textMapHintAnchor"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="8dp"
-                        android:text="Sample location"
-                        android:textColor="@color/text_primary"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:id="@+id/textMapHintAnchor"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true" />
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+            <!-- REAL MAP INSTEAD OF CARDVIEW -->
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_above="@id/buttonDirections" />
 
             <Button
                 android:id="@+id/buttonDirections"

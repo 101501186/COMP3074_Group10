@@ -7,14 +7,15 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <activity android:name=".AboutActivity" />
-        <activity android:name=".MapActivity" />
+        <activity android:name=".MapActivity" android:exported="false"/>
         <activity android:name=".AddEditRestaurantActivity" />
         <activity android:name=".RestaurantDetailActivity" />
         <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD7Yx1VaDDl5aZpWSI4MKjajjcSD8eUdc0" />
+            android:value="@string/google_maps_key" />
+
 
         <activity
             android:name=".SplashActivity"
