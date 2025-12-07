@@ -55,6 +55,11 @@ public class AddEditRestaurantActivity extends AppCompatActivity {
         editDescription = findViewById(R.id.editDescription);
         checkFavorite = findViewById(R.id.checkFavorite);
         Button buttonSave = findViewById(R.id.buttonSave);
+        buttonSave.setOnClickListener(v -> save());
+
+        Button buttonCancel = findViewById(R.id.buttonCancel);
+        buttonCancel.setOnClickListener(v -> finish());
+
 
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), "YOUR_API_KEY_HERE");
