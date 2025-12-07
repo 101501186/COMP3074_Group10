@@ -29,13 +29,23 @@
             android:hint="Phone"
             android:layout_marginTop="8dp" />
 
-        <EditText
-            android:id="@+id/editRating"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Rating (0–5)"
-            android:inputType="numberDecimal"
+            android:text="Rating"
+            android:textSize="14sp"
+            android:textColor="@color/text_primary"
             android:layout_marginTop="8dp" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:numStars="5"
+            android:rating="0"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:isIndicator="false" />
 
         <EditText
             android:id="@+id/editPrice"

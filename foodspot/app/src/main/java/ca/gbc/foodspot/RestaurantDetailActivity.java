@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.RatingBar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             textDescription, textPhone, textTags;
     private CheckBox checkFavorite;
 
+    private RatingBar detailRatingBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         dbHelper = DbHelper.getInstance(this);
 
         ImageView image = findViewById(R.id.imageRestaurant);
+        detailRatingBar = findViewById(R.id.detailRatingBar);
         textName = findViewById(R.id.textName);
         textMeta = findViewById(R.id.textMeta);
         textAddress = findViewById(R.id.textAddress);
@@ -45,6 +49,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         Button buttonShare = findViewById(R.id.buttonShare);
         Button buttonEdit = findViewById(R.id.buttonEdit);
         Button buttonDelete = findViewById(R.id.buttonDelete);
+
+        detailRatingBar.setRating(restaurant.getRating());
 
         image.setImageResource(R.drawable.ic_restaurant_placeholder);
 

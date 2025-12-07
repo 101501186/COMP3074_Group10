@@ -5,16 +5,18 @@ import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import ca.gbc.foodspot.db.DbHelper;
 import ca.gbc.foodspot.model.Restaurant;
 
 public class AddEditRestaurantActivity extends AppCompatActivity {
 
-    private EditText editName, editAddress, editPhone,
-            editRating, editPrice, editDistance, editTags, editDescription;
+    private EditText editName, editAddress, editPhone, editPrice, editDistance, editTags, editDescription;
+    private RatingBar ratingBar;
     private CheckBox checkFavorite;
 
     private DbHelper dbHelper;
@@ -30,7 +32,7 @@ public class AddEditRestaurantActivity extends AppCompatActivity {
         editName = findViewById(R.id.editName);
         editAddress = findViewById(R.id.editAddress);
         editPhone = findViewById(R.id.editPhone);
-        editRating = findViewById(R.id.editRating);
+        ratingBar = findViewById(R.id.ratingBar);
         editPrice = findViewById(R.id.editPrice);
         editDistance = findViewById(R.id.editDistance);
         editTags = findViewById(R.id.editTags);
@@ -54,7 +56,7 @@ public class AddEditRestaurantActivity extends AppCompatActivity {
         editName.setText(existing.getName());
         editAddress.setText(existing.getAddress());
         editPhone.setText(existing.getPhone());
-        editRating.setText(String.valueOf(existing.getRating()));
+        ratingBar.setRating(existing.getRating());
         editPrice.setText(existing.getPriceLevel());
         editDistance.setText(existing.getDistanceText());
         editTags.setText(existing.getTags());
@@ -71,18 +73,11 @@ public class AddEditRestaurantActivity extends AppCompatActivity {
 
         String address = editAddress.getText().toString().trim();
         String phone = editPhone.getText().toString().trim();
-        String ratingText = editRating.getText().toString().trim();
+        float rating = ratingBar.getRating(); // Get star value
         String price = editPrice.getText().toString().trim();
         String distance = editDistance.getText().toString().trim();
         String tags = editTags.getText().toString().trim();
         String desc = editDescription.getText().toString().trim();
-
-        float rating = 0f;
-        if (!TextUtils.isEmpty(ratingText)) {
-            try {
-                rating = Float.parseFloat(ratingText);
-            } catch (NumberFormatException ignored) {}
-        }
 
         if (existing == null) {
             existing = new Restaurant();
@@ -109,5 +104,3 @@ public class AddEditRestaurantActivity extends AppCompatActivity {
         finish();
     }
 }
-
-
