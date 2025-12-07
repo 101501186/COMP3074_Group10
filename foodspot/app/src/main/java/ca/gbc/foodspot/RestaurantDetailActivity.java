@@ -2,7 +2,6 @@ package ca.gbc.foodspot;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -69,6 +68,18 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         checkFavorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
             restaurant.setFavorite(isChecked);
             dbHelper.updateRestaurant(restaurant);
+        });
+
+        detailRatingBar.setOnRatingBarChangeListener((bar, rating, fromUser) -> {
+            if (!fromUser || restaurant == null) return;
+
+            restaurant.setRating(rating);
+            dbHelper.updateRestaurant(restaurant);
+
+            String meta = restaurant.getRating() + " • " + restaurant.getPriceLevel();
+            textMeta.setText(meta);
+
+            Toast.makeText(this, "Rating updated", Toast.LENGTH_SHORT).show();
         });
 
         buttonMap.setOnClickListener(v -> openMapScreen());
