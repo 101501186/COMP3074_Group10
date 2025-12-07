@@ -12,6 +12,10 @@
         <activity android:name=".RestaurantDetailActivity" />
         <activity android:name=".MainActivity" />
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD7Yx1VaDDl5aZpWSI4MKjajjcSD8eUdc0" />
+
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -20,6 +24,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
 
         </activity>
 

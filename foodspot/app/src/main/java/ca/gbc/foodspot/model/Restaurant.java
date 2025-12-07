@@ -12,6 +12,9 @@ public class Restaurant {
     private String description;
     private boolean favorite;
 
+    private double latitude;
+    private double longitude;
+
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 
@@ -41,4 +44,10 @@ public class Restaurant {
 
     public boolean isFavorite() { return favorite; }
     public void setFavorite(boolean favorite) { this.favorite = favorite; }
+
+    public double getLatitude() { return latitude; }
+    public void setLatitude(double latitude) { this.latitude = latitude; }
+
+    public double getLongitude() { return longitude; }
+    public void setLongitude(double longitude) { this.longitude = longitude; }
 }

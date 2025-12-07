@@ -14,7 +14,7 @@ import java.util.List;
 public class DbHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "foodspot.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     public static final String TABLE_RESTAURANTS = "restaurants";
     public static final String COL_ID = "id";
@@ -27,6 +27,8 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COL_TAGS = "tags";
     public static final String COL_DESC = "description";
     public static final String COL_FAVORITE = "favorite";
+    public static final String COL_LATITUDE = "latitude";
+    public static final String COL_LONGITUDE = "longitude";
 
     private static DbHelper instance;
 
@@ -53,7 +55,9 @@ public class DbHelper extends SQLiteOpenHelper {
                 COL_DISTANCE + " TEXT, " +
                 COL_TAGS + " TEXT, " +
                 COL_DESC + " TEXT, " +
-                COL_FAVORITE + " INTEGER DEFAULT 0" +
+                COL_FAVORITE + " INTEGER DEFAULT 0, " +
+                COL_LATITUDE + " REAL, " +        // NEW
+                COL_LONGITUDE + " REAL" +         // NEW
                 ")";
         db.execSQL(sql);
 
@@ -100,6 +104,8 @@ public class DbHelper extends SQLiteOpenHelper {
         cv.put(COL_TAGS, tags);
         cv.put(COL_DESC, desc);
         cv.put(COL_FAVORITE, fav);
+        cv.put(COL_LATITUDE, 0.0);
+        cv.put(COL_LONGITUDE, 0.0);
         db.insert(TABLE_RESTAURANTS, null, cv);
     }
 
@@ -139,6 +145,8 @@ public class DbHelper extends SQLiteOpenHelper {
         cv.put(COL_TAGS, r.getTags());
         cv.put(COL_DESC, r.getDescription());
         cv.put(COL_FAVORITE, r.isFavorite() ? 1 : 0);
+        cv.put(COL_LATITUDE, r.getLatitude());
+        cv.put(COL_LONGITUDE, r.getLongitude());
         return cv;
     }
 
@@ -212,6 +220,8 @@ public class DbHelper extends SQLiteOpenHelper {
         r.setTags(c.getString(c.getColumnIndexOrThrow(COL_TAGS)));
         r.setDescription(c.getString(c.getColumnIndexOrThrow(COL_DESC)));
         r.setFavorite(c.getInt(c.getColumnIndexOrThrow(COL_FAVORITE)) == 1);
+        r.setLatitude(c.getDouble(c.getColumnIndexOrThrow(COL_LATITUDE)));
+        r.setLongitude(c.getDouble(c.getColumnIndexOrThrow(COL_LONGITUDE)));
         return r;
     }
 }
