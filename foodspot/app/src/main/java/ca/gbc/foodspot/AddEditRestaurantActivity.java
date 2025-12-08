@@ -43,7 +43,6 @@ public class AddEditRestaurantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_restaurant);
 
-        // Enable toolbar back button
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -68,9 +67,8 @@ public class AddEditRestaurantActivity extends AppCompatActivity {
         Button buttonCancel = findViewById(R.id.buttonCancel);
         buttonCancel.setOnClickListener(v -> finish());
 
-
         if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), "YOUR_API_KEY_HERE");
+            Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
         }
 
         editAddress.setFocusable(false);

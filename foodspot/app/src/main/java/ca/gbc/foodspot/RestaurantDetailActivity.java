@@ -2,9 +2,9 @@ package ca.gbc.foodspot;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +23,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
     private TextView textName, textMeta, textAddress, textDistance,
             textDescription, textPhone, textTags;
-    private CheckBox checkFavorite;
     private RatingBar detailRatingBar;
 
     @Override
@@ -32,7 +31,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         try {
             setContentView(R.layout.activity_restaurant_detail);
 
-            // Enable toolbar back button
             androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
             if (toolbar != null) {
                 setSupportActionBar(toolbar);
@@ -55,9 +53,10 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             textDescription = findViewById(R.id.textDescription);
             textPhone = findViewById(R.id.textPhone);
             textTags = findViewById(R.id.textTags);
-            checkFavorite = findViewById(R.id.checkFavorite);
-            TextView buttonMap = findViewById(R.id.buttonMap);
-            Button buttonShare = findViewById(R.id.buttonShare);
+
+            Button buttonCall = findViewById(R.id.buttonCall);
+            Button buttonViewOnMap = findViewById(R.id.buttonViewOnMap);
+            Button buttonFavorite = findViewById(R.id.buttonFavorite);
             Button buttonEdit = findViewById(R.id.buttonEdit);
             Button buttonDelete = findViewById(R.id.buttonDelete);
 
@@ -80,15 +79,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             setTitle("Restaurant Details");
             bindData();
 
-            if (checkFavorite != null) {
-                checkFavorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                    if (restaurant != null) {
-                        restaurant.setFavorite(isChecked);
-                        dbHelper.updateRestaurant(restaurant);
-                    }
-                });
-            }
-
             if (detailRatingBar != null) {
                 detailRatingBar.setOnRatingBarChangeListener((bar, rating, fromUser) -> {
                     if (!fromUser || restaurant == null) return;
@@ -106,24 +96,49 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                 });
             }
 
-            if (buttonMap != null) {
-                buttonMap.setOnClickListener(v -> openMapScreen());
-            }
-            if (buttonShare != null) {
-                buttonShare.setOnClickListener(v -> share());
-            }
-            if (buttonEdit != null) {
-                buttonEdit.setOnClickListener(v -> {
-                    if (restaurant != null) {
-                        Intent i = new Intent(this, AddEditRestaurantActivity.class);
-                        i.putExtra("restaurant_id", restaurant.getId());
-                        startActivity(i);
+            if (buttonCall != null) {
+                buttonCall.setOnClickListener(v -> {
+                    if (restaurant == null) return;
+                    String phone = restaurant.getPhone();
+                    if (phone == null || phone.trim().isEmpty()) {
+                        Toast.makeText(this, "No phone number available", Toast.LENGTH_SHORT).show();
+                        return;
                     }
+                    Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+                    dialIntent.setData(Uri.parse("tel:" + phone));
+                    startActivity(dialIntent);
                 });
             }
+
+            if (buttonViewOnMap != null) {
+                buttonViewOnMap.setOnClickListener(v -> openMapScreen());
+            }
+
+            if (buttonFavorite != null) {
+                buttonFavorite.setOnClickListener(v -> {
+                    if (restaurant == null) return;
+                    boolean newFav = !restaurant.isFavorite();
+                    restaurant.setFavorite(newFav);
+                    dbHelper.updateRestaurant(restaurant);
+                    Toast.makeText(this,
+                            newFav ? "Added to favorites" : "Removed from favorites",
+                            Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            if (buttonEdit != null) {
+                buttonEdit.setOnClickListener(v -> {
+                    if (restaurant == null) return;
+                    Intent i = new Intent(this, AddEditRestaurantActivity.class);
+                    i.putExtra("restaurant_id", restaurant.getId());
+                    startActivity(i);
+                });
+            }
+
             if (buttonDelete != null) {
                 buttonDelete.setOnClickListener(v -> confirmDelete());
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             finish();
@@ -141,42 +156,38 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
     private void bindData() {
         if (restaurant == null) return;
-        
+
         if (textName != null) {
             textName.setText(restaurant.getName() != null ? restaurant.getName() : "");
         }
-        
+
         String priceLevel = restaurant.getPriceLevel() != null ? restaurant.getPriceLevel() : "";
         double rating = restaurant.getRating() > 0 ? restaurant.getRating() : 0.0;
         String meta = rating + (priceLevel.isEmpty() ? "" : " • " + priceLevel);
-        
+
         if (textMeta != null) {
             textMeta.setText(meta);
         }
-        
+
         if (textAddress != null) {
             textAddress.setText(restaurant.getAddress() != null ? restaurant.getAddress() : "");
         }
-        
+
         String distance = restaurant.getDistanceText() != null ? restaurant.getDistanceText() : "";
         if (textDistance != null) {
             textDistance.setText(distance);
         }
-        
+
         if (textDescription != null) {
             textDescription.setText(restaurant.getDescription() != null ? restaurant.getDescription() : "");
         }
-        
+
         if (textPhone != null) {
             textPhone.setText(restaurant.getPhone() != null ? restaurant.getPhone() : "");
         }
-        
+
         if (textTags != null) {
             textTags.setText(restaurant.getTags() != null ? restaurant.getTags() : "");
-        }
-        
-        if (checkFavorite != null) {
-            checkFavorite.setChecked(restaurant.isFavorite());
         }
 
         if (detailRatingBar != null) {
@@ -186,7 +197,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
     private void openMapScreen() {
         if (restaurant == null) return;
-        
+
         Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra(MapActivity.EXTRA_RESTAURANT_ID, restaurant.getId());
         startActivity(intent);
@@ -194,14 +205,14 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
     private void share() {
         if (restaurant == null) return;
-        
+
         String name = restaurant.getName() != null ? restaurant.getName() : "";
         String address = restaurant.getAddress() != null ? restaurant.getAddress() : "";
         String phone = restaurant.getPhone() != null ? restaurant.getPhone() : "";
         String priceLevel = restaurant.getPriceLevel() != null ? restaurant.getPriceLevel() : "";
         String tags = restaurant.getTags() != null ? restaurant.getTags() : "";
         String description = restaurant.getDescription() != null ? restaurant.getDescription() : "";
-        
+
         String text = name + "\n" +
                 address + "\n" +
                 "Phone: " + phone + "\n" +
@@ -218,7 +229,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
     private void confirmDelete() {
         if (restaurant == null) return;
-        
+
         String name = restaurant.getName() != null ? restaurant.getName() : "this restaurant";
         new AlertDialog.Builder(this)
                 .setTitle("Delete")

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,14 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Top App Bar -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/FoodSpot.Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/header_height"
-            app:title="@string/title_details"
+            android:layout_height="56dp"
+            app:title="Restaurant Details"
             app:navigationIcon="?attr/homeAsUpIndicator" />
 
+        <!-- Scrollable Content -->
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -29,43 +32,49 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/background_cream">
+                android:layout_height="wrap_content">
 
-                <!-- Hero Image -->
+                <!-- Header Image -->
                 <ImageView
                     android:id="@+id/imageRestaurant"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/hero_image_height"
+                    android:layout_height="220dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_restaurant_placeholder"
-                    android:contentDescription="@string/label_name" />
+                    android:src="@drawable/ic_restaurant_placeholder" />
 
-                <!-- Content Section -->
+                <!-- Content -->
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/spacing_l">
+                    android:padding="16dp">
 
-                    <!-- Restaurant Name -->
+                    <!-- Name + Meta -->
                     <TextView
                         android:id="@+id/textName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.H1"
-                        android:textColor="@color/text_primary"
                         android:text="Restaurant Name"
-                        android:maxLines="2"
-                        android:ellipsize="end" />
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
 
-                    <!-- Rating -->
+                    <TextView
+                        android:id="@+id/textMeta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Category • $$ • 1.2 km away"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/darker_gray" />
+
+                    <!-- Rating Row -->
                     <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginTop="@dimen/spacing_s">
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical">
 
                         <RatingBar
                             android:id="@+id/detailRatingBar"
@@ -75,236 +84,174 @@
                             android:stepSize="0.5"
                             android:isIndicator="true"
                             android:rating="4.5"
-                            android:progressTint="@color/star_gold"
+                            android:progressTint="@android:color/holo_orange_light"
                             style="?android:attr/ratingBarStyleSmall" />
 
                         <TextView
                             android:id="@+id/textRating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/spacing_xxs"
-                            android:textAppearance="@style/TextAppearance.Body"
-                            android:textColor="@color/text_secondary"
-                            android:text="(4.5)" />
+                            android:layout_marginStart="4dp"
+                            android:text="(4.5)"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/black" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/textMeta"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_s"
-                        android:textAppearance="@style/TextAppearance.Small"
-                        android:textColor="@color/text_secondary"
-                        android:text="$$ • 750 m"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/textDistance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_s"
-                        android:textAppearance="@style/TextAppearance.Small"
-                        android:textColor="@color/text_secondary"
-                        android:text="750 m away"
-                        android:visibility="gone" />
-
+                    <!-- Address -->
                     <TextView
                         android:id="@+id/textAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_m"
-                        android:textAppearance="@style/TextAppearance.Body"
-                        android:textColor="@color/text_secondary"
+                        android:layout_marginTop="16dp"
                         android:text="123 Main Street, Toronto, ON"
-                        android:maxLines="2"
-                        android:ellipsize="end" />
+                        android:textSize="14sp"
+                        android:textColor="@android:color/black" />
 
-                    <!-- View on Map Link -->
+                    <!-- Distance -->
                     <TextView
-                        android:id="@+id/buttonMap"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_xs"
-                        android:textAppearance="@style/TextAppearance.Body"
-                        android:textColor="@color/accent_red"
-                        android:text="@string/btn_view_map"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:background="?attr/selectableItemBackground"
-                        android:padding="@dimen/spacing_xxs" />
-
-                    <!-- Description Section -->
-                    <TextView
+                        android:id="@+id/textDistance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_xl"
-                        android:textAppearance="@style/TextAppearance.H3"
-                        android:textColor="@color/text_primary"
-                        android:text="Description" />
+                        android:layout_marginTop="4dp"
+                        android:text="2.1 km away"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/darker_gray" />
 
+                    <!-- Tags -->
+                    <TextView
+                        android:id="@+id/textTags"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Cuisine tags here"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/darker_gray" />
+
+                    <!-- Description -->
                     <TextView
                         android:id="@+id/textDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_s"
-                        android:textAppearance="@style/TextAppearance.Body"
-                        android:textColor="@color/text_primary"
+                        android:layout_marginTop="16dp"
                         android:text="Restaurant description text goes here..."
+                        android:textSize="14sp"
+                        android:textColor="@android:color/black"
                         android:lineSpacingMultiplier="1.5" />
 
                     <!-- Contact Section -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_xl"
-                        android:textAppearance="@style/TextAppearance.H3"
-                        android:textColor="@color/text_primary"
-                        android:text="Contact" />
+                        android:layout_marginTop="24dp"
+                        android:text="Contact"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black" />
 
                     <TextView
                         android:id="@+id/textPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_s"
-                        android:textAppearance="@style/TextAppearance.Body"
-                        android:textColor="@color/text_secondary"
-                        android:text="(416) 555-0123" />
-
-                    <!-- Categories Section -->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_xl"
-                        android:textAppearance="@style/TextAppearance.H3"
-                        android:textColor="@color/text_primary"
-                        android:text="Categories" />
-
-                    <TextView
-                        android:id="@+id/textTags"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_s"
-                        android:textAppearance="@style/TextAppearance.Tag"
-                        android:textColor="@color/text_primary"
-                        android:text="Italian, Fine Dining, Romantic" />
-
-
-                    <CheckBox
-                        android:id="@+id/checkFavorite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_xl"
-                        android:text="@string/label_favorite"
-                        android:visibility="gone" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/spacing_massive" />
-
+                        android:layout_marginTop="4dp"
+                        android:text="(416) 555-0199"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/black" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
-        <!-- Action Drawer (Bottom Sheet) -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- Bottom Action Card -->
+        <androidx.cardview.widget.CardView
             android:id="@+id/cardDrawer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="0dp"
+            app:cardCornerRadius="16dp"
             app:cardElevation="8dp"
-            android:background="@drawable/bg_drawer_top_rounded">
+            android:layout_marginTop="4dp"
+            android:background="@android:color/white">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/spacing_m">
+                android:padding="16dp">
 
-                <!-- Drawer Handle -->
+                <!-- Handle -->
                 <LinearLayout
-                    android:id="@+id/layoutDrawerHandle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/drawer_collapsed_height"
                     android:orientation="horizontal"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?attr/selectableItemBackground">
-
-                    <ImageView
-                        android:id="@+id/imageDrawerHandle"
-                        android:layout_width="@dimen/icon_size_medium"
-                        android:layout_height="@dimen/icon_size_medium"
-                        android:src="@android:drawable/arrow_up_float"
-                        android:contentDescription="Expand drawer"
-                        app:tint="@color/orange_primary" />
-                </LinearLayout>
-
-                <!-- Drawer Content (initially hidden/collapsed) -->
-                <LinearLayout
-                    android:id="@+id/layoutDrawerContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <View
+                        android:layout_width="40dp"
+                        android:layout_height="4dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@android:color/darker_gray" />
+                </LinearLayout>
+
+                <!-- Buttons -->
+                <LinearLayout
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <!-- Action Buttons Row 1 -->
-                    <LinearLayout
+                    <Button
+                        android:id="@+id/buttonCall"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:layout_height="48dp"
+                        android:text="Call"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@android:color/holo_green_dark"
+                        android:textColor="@android:color/white"
+                        android:drawableStart="@android:drawable/ic_menu_call" />
 
-                        <Button
-                            android:id="@+id/buttonEdit"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/button_height"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="@dimen/spacing_xs"
-                            android:text="@string/btn_edit"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:background="@drawable/bg_gradient_orange" />
+                    <Button
+                        android:id="@+id/buttonViewOnMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="8dp"
+                        android:text="View on Map"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@android:color/holo_blue_light"
+                        android:textColor="@android:color/white"
+                        android:drawableStart="@android:drawable/ic_menu_mapmode" />
 
-                        <Button
-                            android:id="@+id/buttonDelete"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/button_height"
-                            android:layout_weight="1"
-                            android:layout_marginStart="@dimen/spacing_xs"
-                            android:layout_marginEnd="@dimen/spacing_xs"
-                            android:text="@string/btn_delete"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:backgroundTint="@color/accent_red" />
-
-                        <Button
-                            android:id="@+id/buttonShare"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/button_height"
-                            android:layout_weight="1"
-                            android:layout_marginStart="@dimen/spacing_xs"
-                            android:text="@string/btn_share"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:background="@drawable/bg_gradient_orange" />
-                    </LinearLayout>
-
-                    <!-- Favorite Button Row 2 -->
                     <Button
                         android:id="@+id/buttonFavorite"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/button_height"
-                        android:layout_marginTop="@dimen/spacing_m"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="16dp"
                         android:text="Add to Favorites"
                         android:textAllCaps="false"
-                        android:textColor="@color/accent_red"
-                        android:backgroundTint="@color/white"
-                        android:drawableStart="@android:drawable/btn_star_big_off"
-                        android:drawableTint="@color/accent_red" />
+                        android:textColor="@android:color/holo_red_dark"
+                        android:backgroundTint="@android:color/white"
+                        android:drawableStart="@android:drawable/btn_star_big_off" />
+
+                    <!-- Edit button -->
+                    <Button
+                        android:id="@+id/buttonEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Edit"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/black"
+                        android:backgroundTint="@android:color/darker_gray"
+                        android:drawableStart="@android:drawable/ic_menu_edit" />
+
+                    <Button
+                        android:id="@+id/buttonDelete"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Delete"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:backgroundTint="@android:color/holo_red_dark" />
                 </LinearLayout>
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

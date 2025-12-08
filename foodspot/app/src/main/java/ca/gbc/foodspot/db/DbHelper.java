@@ -6,15 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import ca.gbc.foodspot.model.Restaurant;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import ca.gbc.foodspot.model.Restaurant;
 
 public class DbHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "foodspot.db";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 4;
 
     public static final String TABLE_RESTAURANTS = "restaurants";
     public static final String COL_ID = "id";
@@ -56,8 +56,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 COL_TAGS + " TEXT, " +
                 COL_DESC + " TEXT, " +
                 COL_FAVORITE + " INTEGER DEFAULT 0, " +
-                COL_LATITUDE + " REAL, " +        // NEW
-                COL_LONGITUDE + " REAL" +         // NEW
+                COL_LATITUDE + " REAL, " +
+                COL_LONGITUDE + " REAL" +
                 ")";
         db.execSQL(sql);
 
@@ -69,31 +69,32 @@ public class DbHelper extends SQLiteOpenHelper {
                 "(416) 555-0123", 4.8f, "$$$", "750 m away",
                 "Italian, Fine Dining, Romantic",
                 "Experience authentic Italian cuisine in an elegant atmosphere. Perfect spot for date nights and celebrations.",
-                1);
+                1, 43.6532, -79.3832);
 
         insertSeed(db, "Sunset Bistro", "89 Lakeshore Blvd, Toronto, ON",
                 "(416) 555-0177", 4.5f, "$$", "1.2 km away",
                 "Bistro, Brunch, Patio",
                 "Casual bistro with brunch specials, lakeside views, and a relaxed patio.",
-                1);
+                1, 43.6387, -79.3817);
 
         insertSeed(db, "Spice Route", "716 King Street, Toronto, ON",
                 "(416) 555-0199", 4.6f, "$$", "2.1 km away",
                 "Indian, Vegetarian, Takeout",
                 "Modern Indian restaurant offering tandoori dishes, curries, and vegetarian options.",
-                0);
+                0, 43.6440, -79.3957);
 
         insertSeed(db, "Ocean Breeze", "45 Harbour St, Toronto, ON",
                 "(416) 555-0210", 4.3f, "$$", "2.5 km away",
                 "Seafood, Family, Casual",
                 "Seafood-focused menu with daily catches and family-friendly seating.",
-                0);
+                0, 43.6407, -79.3802);
     }
 
     private void insertSeed(SQLiteDatabase db,
                             String name, String address, String phone,
                             float rating, String price, String distance,
-                            String tags, String desc, int fav) {
+                            String tags, String desc, int fav,
+                            double lat, double lng) {
         ContentValues cv = new ContentValues();
         cv.put(COL_NAME, name);
         cv.put(COL_ADDRESS, address);
@@ -104,8 +105,8 @@ public class DbHelper extends SQLiteOpenHelper {
         cv.put(COL_TAGS, tags);
         cv.put(COL_DESC, desc);
         cv.put(COL_FAVORITE, fav);
-        cv.put(COL_LATITUDE, 0.0);
-        cv.put(COL_LONGITUDE, 0.0);
+        cv.put(COL_LATITUDE, lat);
+        cv.put(COL_LONGITUDE, lng);
         db.insert(TABLE_RESTAURANTS, null, cv);
     }
 
