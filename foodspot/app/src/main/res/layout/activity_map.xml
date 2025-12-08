@@ -14,7 +14,7 @@
             android:id="@+id/toolbar"
             style="@style/FoodSpot.Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="@dimen/header_height"
             app:title="@string/title_map" />
 
         <RelativeLayout
@@ -35,10 +35,12 @@
             <Button
                 android:id="@+id/buttonDirections"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginStart="@dimen/spacing_m"
+                android:layout_marginEnd="@dimen/spacing_m"
+                android:layout_marginBottom="@dimen/spacing_m"
                 android:layout_above="@+id/bottomNav"
-                android:backgroundTint="@color/orange_primary"
+                android:background="@drawable/bg_gradient_orange"
                 android:text="@string/btn_directions"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white" />
@@ -46,9 +48,9 @@
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNav"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="@dimen/bottom_nav_height"
                 android:layout_alignParentBottom="true"
-                android:background="@color/bottom_nav_background"
+                android:background="@drawable/bg_gradient_orange"
                 app:menu="@menu/bottom_nav"
                 app:itemIconTint="@color/bottom_nav_selector"
                 app:itemTextColor="@color/bottom_nav_selector" />

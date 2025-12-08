@@ -3,11 +3,12 @@ package ca.gbc.foodspot.ui;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ca.gbc.foodspot.R;
@@ -37,8 +38,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
     }
 
     public void setItems(List<Restaurant> list) {
-        items = list;
+        android.util.Log.d("RestaurantAdapter", "setItems called with " + (list != null ? list.size() : 0) + " items");
+        items = list != null ? list : new ArrayList<>();
         notifyDataSetChanged();
+        android.util.Log.d("RestaurantAdapter", "After notifyDataSetChanged, itemCount: " + getItemCount());
     }
 
     @NonNull
@@ -51,8 +54,17 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        android.util.Log.d("RestaurantAdapter", "onBindViewHolder called for position: " + position + ", items size: " + items.size());
+        if (position < 0 || position >= items.size()) {
+            android.util.Log.w("RestaurantAdapter", "Invalid position: " + position);
+            return;
+        }
         Restaurant r = items.get(position);
-        holder.bind(r, clickListener, favListener);
+        if (r != null) {
+            holder.bind(r, clickListener, favListener);
+        } else {
+            android.util.Log.w("RestaurantAdapter", "Restaurant is null at position: " + position);
+        }
     }
 
     @Override
@@ -63,7 +75,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageThumb;
         TextView textName, textAddress, textMeta, textTags;
-        CheckBox checkFavorite;
+        ImageButton buttonFavorite;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,30 +84,75 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
             textAddress = itemView.findViewById(R.id.textAddress);
             textMeta = itemView.findViewById(R.id.textMeta);
             textTags = itemView.findViewById(R.id.textTags);
-            checkFavorite = itemView.findViewById(R.id.checkFavorite);
+            buttonFavorite = itemView.findViewById(R.id.buttonFavorite);
+
+            itemView.setClickable(true);
+            itemView.setFocusable(true);
         }
 
         void bind(Restaurant r,
                   OnItemClickListener clickListener,
                   OnFavoriteToggleListener favListener) {
-            imageThumb.setImageResource(R.drawable.ic_restaurant_placeholder);
-            textName.setText(r.getName());
-            textAddress.setText(r.getAddress());
-            String meta = r.getRating() + " • " +
-                    (r.getPriceLevel() == null ? "" : r.getPriceLevel()) +
-                    (r.getDistanceText() == null ? "" : " • " + r.getDistanceText());
-            textMeta.setText(meta);
-            textTags.setText(r.getTags());
+            android.util.Log.d("RestaurantAdapter", "Binding restaurant: " + (r != null ? r.getName() + " (ID: " + r.getId() + ")" : "null"));
 
-            checkFavorite.setOnCheckedChangeListener(null);
-            checkFavorite.setChecked(r.isFavorite());
+            itemView.setOnClickListener(null);
 
             itemView.setOnClickListener(v -> {
-                if (clickListener != null) clickListener.onItemClick(r);
+                try {
+                    android.util.Log.d("RestaurantAdapter", "Card clicked!");
+                    android.util.Log.d("RestaurantAdapter", "Restaurant: " + (r != null ? r.getName() : "null"));
+                    android.util.Log.d("RestaurantAdapter", "ClickListener: " + (clickListener != null ? "not null" : "null"));
+                    if (r != null && clickListener != null) {
+                        android.util.Log.d("RestaurantAdapter", "Calling clickListener with restaurant ID: " + r.getId());
+                        clickListener.onItemClick(r);
+                    } else {
+                        android.util.Log.d("RestaurantAdapter", "Skipping click - restaurant: " + (r != null) + ", listener: " + (clickListener != null));
+                    }
+                } catch (Exception e) {
+                    android.util.Log.e("RestaurantAdapter", "Error in click listener", e);
+                    e.printStackTrace();
+                }
             });
+            
+            imageThumb.setImageResource(R.drawable.ic_restaurant_placeholder);
+            textName.setText(r.getName() != null ? r.getName() : "");
+            textAddress.setText(r.getAddress() != null ? r.getAddress() : "");
+            String priceLevel = r.getPriceLevel() != null ? r.getPriceLevel() : "";
+            String distance = r.getDistanceText() != null ? r.getDistanceText() : "";
+            double rating = r.getRating() > 0 ? r.getRating() : 0.0;
+            String meta = rating + 
+                    (priceLevel.isEmpty() ? "" : " • " + priceLevel) +
+                    (distance.isEmpty() ? "" : " • " + distance);
+            textMeta.setText(meta);
+            textTags.setText(r.getTags() != null ? r.getTags() : "");
 
-            checkFavorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if (favListener != null) favListener.onFavoriteToggle(r, isChecked);
+            // Update heart icon based on favorite status
+            if (r.isFavorite()) {
+                buttonFavorite.setImageResource(R.drawable.ic_heart_filled);
+                buttonFavorite.clearColorFilter();
+            } else {
+                buttonFavorite.setImageResource(R.drawable.ic_heart_outline);
+                buttonFavorite.clearColorFilter();
+            }
+
+            // Set click listener for heart button - consume event to prevent card click
+            buttonFavorite.setOnClickListener(v -> {
+                v.setClickable(false);
+                boolean newFavoriteState = !r.isFavorite();
+                r.setFavorite(newFavoriteState);
+
+                if (newFavoriteState) {
+                    buttonFavorite.setImageResource(R.drawable.ic_heart_filled);
+                    buttonFavorite.clearColorFilter();
+                } else {
+                    buttonFavorite.setImageResource(R.drawable.ic_heart_outline);
+                    buttonFavorite.clearColorFilter();
+                }
+                
+                if (favListener != null) {
+                    favListener.onFavoriteToggle(r, newFavoriteState);
+                }
+                v.setClickable(true);
             });
         }
     }

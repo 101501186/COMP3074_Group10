@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import ca.gbc.foodspot.db.DbHelper;
 import ca.gbc.foodspot.model.Restaurant;
 import ca.gbc.foodspot.ui.RestaurantAdapter;
+import ca.gbc.foodspot.RestaurantDetailActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -63,21 +64,42 @@ public class MainActivity extends AppCompatActivity
         bottomNav.setSelectedItemId(R.id.nav_home);
 
         RecyclerView recycler = findViewById(R.id.recyclerRestaurants);
+        if (recycler == null) {
+            android.util.Log.e("MainActivity", "RecyclerView not found!");
+            return;
+        }
+        android.util.Log.d("MainActivity", "RecyclerView found, setting layout manager");
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new RestaurantAdapter(
                 restaurant -> {
-                    Intent i = new Intent(MainActivity.this, RestaurantDetailActivity.class);
-                    i.putExtra("restaurant_id", restaurant.getId());
-                    startActivity(i);
+                    try {
+                        android.util.Log.d("MainActivity", "Restaurant clicked: " + (restaurant != null ? restaurant.getName() : "null"));
+                        android.util.Log.d("MainActivity", "Restaurant ID: " + (restaurant != null ? restaurant.getId() : "null"));
+                        if (restaurant != null && restaurant.getId() > 0) {
+                            android.util.Log.d("MainActivity", "Starting RestaurantDetailActivity with ID: " + restaurant.getId());
+                            Intent i = new Intent(MainActivity.this, RestaurantDetailActivity.class);
+                            i.putExtra("restaurant_id", restaurant.getId());
+                            startActivity(i);
+                            android.util.Log.d("MainActivity", "Activity started");
+                        } else {
+                            android.util.Log.w("MainActivity", "Cannot navigate - restaurant: " + (restaurant != null) + ", ID: " + (restaurant != null ? restaurant.getId() : "null"));
+                        }
+                    } catch (Exception e) {
+                        android.util.Log.e("MainActivity", "Error navigating to detail", e);
+                        e.printStackTrace();
+                    }
                 },
                 (restaurant, isFavorite) -> {
-                    restaurant.setFavorite(isFavorite);
-                    dbHelper.updateRestaurant(restaurant);
-                    loadData();
+                    if (restaurant != null) {
+                        restaurant.setFavorite(isFavorite);
+                        dbHelper.updateRestaurant(restaurant);
+                        loadData();
+                    }
                 }
         );
         recycler.setAdapter(adapter);
+        android.util.Log.d("MainActivity", "Adapter set on RecyclerView");
 
         searchView = findViewById(R.id.searchView);
         setupSearch();
@@ -87,6 +109,9 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(MainActivity.this, AddEditRestaurantActivity.class);
             startActivity(i);
         });
+
+        android.util.Log.d("MainActivity", "About to call loadData()");
+        loadData();
     }
 
     @Override
@@ -116,7 +141,12 @@ public class MainActivity extends AppCompatActivity
     private void loadData() {
         List<Restaurant> list =
                 dbHelper.getRestaurants(filterFavorites, filterReviews, currentQuery);
+        android.util.Log.d("MainActivity", "Loaded " + list.size() + " restaurants");
+        for (Restaurant r : list) {
+            android.util.Log.d("MainActivity", "Restaurant: " + r.getName() + " (ID: " + r.getId() + ")");
+        }
         adapter.setItems(list);
+        android.util.Log.d("MainActivity", "Adapter items count: " + adapter.getItemCount());
     }
 
     private boolean onBottomNavSelected(@NonNull MenuItem item) {
