@@ -122,7 +122,6 @@ public class MapActivity extends AppCompatActivity
     public void onMapReady(@NonNull GoogleMap map) {
         googleMap = map;
 
-        // Single-restaurant mode (opened from details)
         if (restaurant != null) {
             double lat = restaurant.getLatitude();
             double lng = restaurant.getLongitude();
@@ -142,7 +141,6 @@ public class MapActivity extends AppCompatActivity
             return;
         }
 
-        // Generic map mode – show all saved restaurants
         LatLng toronto = new LatLng(43.6532, -79.3832);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(toronto, 12f));
 
@@ -168,7 +166,6 @@ public class MapActivity extends AppCompatActivity
             }
         }
 
-        // When user taps a pin, select that restaurant and enable directions
         googleMap.setOnMarkerClickListener(marker -> {
             Object tag = marker.getTag();
             if (tag instanceof Restaurant) {
