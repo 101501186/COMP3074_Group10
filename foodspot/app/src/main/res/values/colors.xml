@@ -1,27 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="orange_primary">#FF8A3C</color>
+    <!-- Primary Colors -->
+    <color name="orange_start">#FF8C42</color>
+    <color name="orange_end">#FFA366</color>
+    <color name="orange_primary">#FF8C42</color>
     <color name="orange_primary_dark">#E2711D</color>
     <color name="orange_light">#FFF1DD</color>
+    <color name="deep_blue">#023047</color>
+    <color name="accent_red">#BA2D0B</color>
+    <color name="accent_red_dark">#9A2309</color>
+    <color name="light_gold">#F4E4C1</color>
+    <color name="background_cream">#FFF8F0</color>
+    <color name="card_background">#FFE5CC</color>
+    <color name="background_light">#FFF8F0</color>
+    
+    <color name="star_gold">#FFD700</color>
 
-    <color name="teal_accent">#00897B</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray_700">#374151</color>
+    <color name="gray_600">#6B7280</color>
+    <color name="gray_500">#9CA3AF</color>
+    <color name="gray_400">#D1D5DB</color>
+    <color name="gray_300">#D1D5DB</color>
+    <color name="gray_200">#E5E7EB</color>
 
-    <color name="background_light">#FFF7EC</color>
-    <color name="card_background">#FFFFFF</color>
+    <color name="text_primary">#023047</color>
+    <color name="text_secondary">#374151</color>
+    <color name="text_muted">#6B7280</color>
 
-    <color name="text_primary">#424242</color>
-    <color name="text_secondary">#757575</color>
+    <color name="black_50">#80000000</color>
+    <color name="white_10">#1AFFFFFF</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="white_80">#CCFFFFFF</color>
+    <color name="light_gold_20">#33F4E4C1</color>
+    <color name="light_gold_40">#66F4E4C1</color>
 
     <color name="bottom_nav_background">@color/orange_primary</color>
     <color name="bottom_nav_icon_active">#FFFFFFFF</color>
     <color name="bottom_nav_icon_inactive">#B3FFFFFF</color>
 
+    <color name="bg_map">#E8DCC4</color>
+    <color name="bg_map_grid">#D4C5A9</color>
+    <color name="bg_map_road">#B8A888</color>
+
+    <color name="teal_accent">#00897B</color>
     <color name="purple_200">#BB86FC</color>
     <color name="purple_500">#6200EE</color>
     <color name="purple_700">#3700B3</color>
     <color name="teal_200">#03DAC5</color>
     <color name="teal_700">#018786</color>
     <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
-
 </resources>

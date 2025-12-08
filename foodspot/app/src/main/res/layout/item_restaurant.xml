@@ -1,91 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="12dp"
-    android:layout_marginEnd="12dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
-    app:cardCornerRadius="12dp"
+    android:layout_marginStart="@dimen/spacing_m"
+    android:layout_marginEnd="@dimen/spacing_m"
+    android:layout_marginTop="@dimen/spacing_s"
+    android:layout_marginBottom="@dimen/spacing_s"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/radius_large"
     app:cardUseCompatPadding="true"
-    app:cardElevation="3dp">
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/card_background">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="@dimen/spacing_m"
+        android:clickable="false"
+        android:focusable="false">
+
+        <!-- Favorite Heart Button (top-right) -->
+        <ImageButton
+            android:id="@+id/buttonFavorite"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_heart_outline"
+            android:contentDescription="@string/label_favorite"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
 
         <ImageView
             android:id="@+id/imageThumb"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="@dimen/card_image_size"
+            android:layout_height="@dimen/card_image_size"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_restaurant_placeholder" />
+            android:src="@drawable/ic_restaurant_placeholder"
+            android:contentDescription="@string/label_name"
+            android:clickable="false"
+            android:focusable="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
+        <!-- Content Layout -->
         <LinearLayout
+            android:id="@+id/layoutContent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_marginStart="16dp">
+            android:layout_marginStart="@dimen/spacing_m"
+            android:layout_marginEnd="@dimen/spacing_s"
+            android:clickable="false"
+            android:focusable="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageThumb"
+            app:layout_constraintEnd_toStartOf="@id/buttonFavorite"
+            app:layout_constraintBottom_toBottomOf="parent">
 
+            <!-- Restaurant Name -->
             <TextView
                 android:id="@+id/textName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.H2"
                 android:textColor="@color/text_primary"
-                android:text="Restaurant name" />
+                android:text="Restaurant name"
+                android:maxLines="1"
+                android:ellipsize="end" />
 
             <TextView
                 android:id="@+id/textAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/spacing_xxs"
+                android:textAppearance="@style/TextAppearance.Small"
                 android:textColor="@color/text_secondary"
-                android:text="Address"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/textMeta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textColor="@color/text_secondary"
-                android:text="4.5 • $$ • 750 m"
-                android:textSize="13sp" />
+                android:text="123 Main Street"
+                android:maxLines="1"
+                android:ellipsize="end" />
 
             <TextView
                 android:id="@+id/textTags"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/text_secondary"
-                android:text="Italian, Brunch, Patio"
-                android:textSize="12sp" />
-        </LinearLayout>
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:textAppearance="@style/TextAppearance.Tag"
+                android:textColor="@color/text_primary"
+                android:text="Italian, Fine Dining, Romantic"
+                android:maxLines="2"
+                android:ellipsize="end" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="top|end">
-
-            <CheckBox
-                android:id="@+id/checkFavorite"
+            <TextView
+                android:id="@+id/textMeta"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:textAppearance="@style/TextAppearance.Small"
+                android:textColor="@color/text_secondary"
+                android:text="4.5 • $$ • 750 m"
+                android:maxLines="1"
+                android:ellipsize="end" />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="8dp"
-                android:src="@android:drawable/btn_star_big_off"
-                android:tint="@color/orange_primary" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:gravity="center_vertical">
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:stepSize="0.5"
+                    android:isIndicator="true"
+                    android:rating="4.5"
+                    android:progressTint="@color/star_gold"
+                    style="?android:attr/ratingBarStyleSmall" />
+
+                <TextView
+                    android:id="@+id/textRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_xxs"
+                    android:textAppearance="@style/TextAppearance.Small"
+                    android:textColor="@color/text_secondary"
+                    android:text="(4.5)" />
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

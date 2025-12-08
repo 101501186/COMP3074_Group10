@@ -1,102 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="@color/background_cream">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/FoodSpot.Toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/header_height"
+        app:title="@string/title_add_restaurant"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
 
-        <EditText
-            android:id="@+id/editName"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false">
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name" />
+            android:padding="@dimen/spacing_l">
 
-        <EditText
-            android:id="@+id/editAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Address"
-            android:layout_marginTop="8dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.BodyMedium"
+                android:textColor="@color/text_primary"
+                android:text="@string/label_name"
+                android:layout_marginBottom="@dimen/spacing_xs" />
 
-        <EditText
-            android:id="@+id/editPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Phone"
-            android:layout_marginTop="8dp" />
+            <EditText
+                android:id="@+id/editName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:hint="Enter restaurant name"
+                android:textAppearance="@style/TextAppearance.Body"
+                android:paddingStart="@dimen/spacing_m"
+                android:paddingEnd="@dimen/spacing_m"
+                android:background="@drawable/bg_input_field"
+                android:layout_marginBottom="@dimen/spacing_m" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rating"
-            android:textSize="14sp"
-            android:textColor="@color/text_primary"
-            android:layout_marginTop="8dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.BodyMedium"
+                android:textColor="@color/text_primary"
+                android:text="@string/label_address"
+                android:layout_marginBottom="@dimen/spacing_xs" />
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:stepSize="1"
-            android:numStars="5"
-            android:rating="0"
-            style="?android:attr/ratingBarStyleIndicator"
-            android:isIndicator="false" />
+            <EditText
+                android:id="@+id/editAddress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:hint="Enter address"
+                android:textAppearance="@style/TextAppearance.Body"
+                android:paddingStart="@dimen/spacing_m"
+                android:paddingEnd="@dimen/spacing_m"
+                android:background="@drawable/bg_input_field"
+                android:layout_marginBottom="@dimen/spacing_m" />
 
-        <EditText
-            android:id="@+id/editPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Price level ($, $$, $$$)"
-            android:layout_marginTop="8dp" />
+            <!-- Phone -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.BodyMedium"
+                android:textColor="@color/text_primary"
+                android:text="@string/label_phone"
+                android:layout_marginBottom="@dimen/spacing_xs" />
 
-        <EditText
-            android:id="@+id/editDistance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Distance text (e.g., 750 m away)"
-            android:layout_marginTop="8dp" />
-
-        <EditText
-            android:id="@+id/editTags"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tags (comma separated)"
-            android:layout_marginTop="8dp" />
-
-        <EditText
-            android:id="@+id/editDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Description"
-            android:minLines="3"
-            android:layout_marginTop="8dp" />
-
-        <CheckBox
-            android:id="@+id/checkFavorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Favorite"
-            android:layout_marginTop="8dp" />
-
-        <Button
-            android:id="@+id/buttonSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:layout_marginTop="16dp" />
-
-        <Button
-            android:id="@+id/buttonCancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:layout_marginTop="8dp" />
+            <EditText
+                android:id="@+id/editPhone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:hint="Enter phone number"
+                android:inputType="phone"
+                android:textAppearance="@style/TextAppearance.Body"
+                android:paddingStart="@dimen/spacing_m"
+                android:paddingEnd="@dimen/spacing_m"
+                android:background="@drawable/bg_input_field"
+                android:layout_marginBottom="@dimen/spacing_m" />
 
 
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.BodyMedium"
+                android:textColor="@color/text_primary"
+                android:text="@string/label_rating_range"
+                android:layout_marginBottom="@dimen/spacing_xs" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:rating="0"
+                android:progressTint="@color/star_gold"
+                android:layout_marginBottom="@dimen/spacing_m" />
+
+            <!-- Price Level -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.BodyMedium"
+                android:textColor="@color/text_primary"
+                android:text="@string/label_price"
+                android:layout_marginTop="@dimen/spacing_m"
+                android:layout_marginBottom="@dimen/spacing_xs" />
+
+            <EditText
+                android:id="@+id/editPrice"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:hint="Enter price level ($, $$, $$$)"
+                android:textAppearance="@style/TextAppearance.Body"
+                android:paddingStart="@dimen/spacing_m"
+                android:paddingEnd="@dimen/spacing_m"
+                android:background="@drawable/bg_input_field"
+                android:layout_marginBottom="@dimen/spacing_m" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.BodyMedium"
+                android:textColor="@color/text_primary"
+                android:text="@string/label_distance"
+                android:layout_marginBottom="@dimen/spacing_xs" />
+
+            <EditText
+                android:id="@+id/editDistance"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:hint="Enter distance (e.g., 750 m away)"
+                android:textAppearance="@style/TextAppearance.Body"
+                android:paddingStart="@dimen/spacing_m"
+                android:paddingEnd="@dimen/spacing_m"
+                android:background="@drawable/bg_input_field"
+                android:layout_marginBottom="@dimen/spacing_m" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.BodyMedium"
+                android:textColor="@color/text_primary"
+                android:text="@string/label_tags"
+                android:layout_marginBottom="@dimen/spacing_xs" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/spacing_m">
+
+                <EditText
+                    android:id="@+id/editTag"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/input_height"
+                    android:layout_weight="1"
+                    android:hint="Add a tag"
+                    android:textAppearance="@style/TextAppearance.Body"
+                    android:paddingStart="@dimen/spacing_m"
+                    android:paddingEnd="@dimen/spacing_m"
+                    android:background="@drawable/bg_input_field"
+                    android:layout_marginEnd="@dimen/spacing_s" />
+
+                <Button
+                    android:id="@+id/buttonAddTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/input_height"
+                    android:text="@string/btn_add"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:background="@drawable/bg_gradient_orange"
+                    android:minWidth="80dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textTags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Tag"
+                android:textColor="@color/text_primary"
+                android:minHeight="40dp"
+                android:layout_marginBottom="@dimen/spacing_m"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/editTags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tags (comma separated)"
+                android:textAppearance="@style/TextAppearance.Body"
+                android:paddingStart="@dimen/spacing_m"
+                android:paddingEnd="@dimen/spacing_m"
+                android:background="@drawable/bg_input_field"
+                android:layout_marginBottom="@dimen/spacing_m"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.BodyMedium"
+                android:textColor="@color/text_primary"
+                android:text="@string/label_description"
+                android:layout_marginBottom="@dimen/spacing_xs" />
+
+            <EditText
+                android:id="@+id/editDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minLines="5"
+                android:gravity="top"
+                android:hint="Enter description"
+                android:textAppearance="@style/TextAppearance.Body"
+                android:paddingStart="@dimen/spacing_m"
+                android:paddingEnd="@dimen/spacing_m"
+                android:paddingTop="@dimen/spacing_m"
+                android:paddingBottom="@dimen/spacing_m"
+                android:background="@drawable/bg_input_field"
+                android:layout_marginBottom="@dimen/spacing_m" />
+
+            <CheckBox
+                android:id="@+id/checkFavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_favorite"
+                android:textAppearance="@style/TextAppearance.Body"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="@dimen/spacing_xl" />
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:text="@string/btn_save"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_gradient_orange"
+                android:layout_marginBottom="@dimen/spacing_s" />
+
+            <Button
+                android:id="@+id/buttonCancel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:text="@string/btn_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/text_primary"
+                android:backgroundTint="@color/gray_200"
+                android:layout_marginBottom="@dimen/spacing_xl" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
